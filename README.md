@@ -15,7 +15,7 @@ consumption.  The access & authentication is handled by Google's federated login
 and largely non-volatile settings are just stored in settings.js.  Simples.
 
 Current screenshot of the web interface as of September 2013:
-![Image](../blob/master/screenshot.png?raw=true)
+![Image](../master/screenshot.png?raw=true)
 
 
 
