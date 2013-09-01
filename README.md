@@ -9,12 +9,15 @@ There are lots out there already - some are quite hacky with wires branching out
 Arduinos, some are neatly done but took strange decisions that require databases to be setup on the Pi
 to store details of which switches etc to be used. 
 
-This code is an attempt at a light-weight & no database solution.  The hardware can be easily
-hidden away in a plain Raspberry Pi box, and the software is based off of NodeJS for low-resource
-consumption.  The access & authentication is handled by Google's federated login, and the basic
-and largely non-volatile settings are just stored in settings.js.  Simples.
+This code is an attempt at a light-weight & no database solution for 433Mhz switches, currently only 
+supporting the "two rotary dials" type switches but it would be very easily to extend to other 
+types.  The hardware required for this can be easily hidden away in a plain Raspberry Pi box, and 
+the software is based off of NodeJS for low-resource consumption.  The access & authentication is 
+handled by Google's federated login, and the basic and largely non-volatile settings are just stored 
+in settings.js.  Simples.
 
 Current screenshot of the web interface as of September 2013:
+
 ![Image](../master/screenshot.png?raw=true)
 
 
@@ -28,8 +31,8 @@ Apart from some 433MHz remote switches you will need some sort of 433MHz RF Link
 connected to your Pi, with 4 female-female jumper leads to connect from your Pi to the ground, 
 data, voltage and antenna pins on the transmitter.
 
-How you hook your transmitter up to your Pi will vary depending on what transmitter you get, but 
-for mine I did it like this: 
+How you hook your transmitter up to your Pi will vary depending on what transmitter you get (the
+one I got was Pin 1:ground, 2:data, 3:vcc, 4:antenna), but for mine I did it like this: 
 
 (Tx -> Pi)  
 1 -> 6  
@@ -86,3 +89,13 @@ require an architecture which supports blx" then I edited the src/node-v*/deps/v
 Once you've got node running you just need to finally install the following node modules: 
  
 `npm install express passport ejs connect-flash passport-google`
+
+Set up
+======
+When setting up the software, make sure you edit settings.js to reflect your needs.  Please
+make sure you add in your primary Google account's email address into the list of authorised users
+or you wont be able to log in!
+
+Also, in switches.js you might need to fiddle with the codes sent to the switches, it seems that
+for some switches the "On" and "Off" codes can be "FF" and "F0", or "0F" and "00", even if the 
+model number of the plugs is the same!  Some experimentation might be required.

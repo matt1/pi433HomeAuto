@@ -8,7 +8,7 @@ var Switches = function() {
 		three: 'FF0F',
 		four: 'FFF0',
 		padding: 'FF',
-		on: '0FS',
+		on: '0FS',		// If these don't work, try FFS (on) and F0S
 		off: '00S'
 	}
 	
