@@ -96,6 +96,13 @@ When setting up the software, make sure you edit settings.js to reflect your nee
 make sure you add in your primary Google account's email address into the list of authorised users
 or you wont be able to log in!
 
-Also, in switches.js you might need to fiddle with the codes sent to the switches, it seems that
-for some switches the "On" and "Off" codes can be "FF" and "F0", or "0F" and "00", even if the 
-model number of the plugs is the same!  Some experimentation might be required.
+Also, in switches.js you might need to fiddle with the codes sent to the switches as it seems that
+for some switches the "On" and "Off" codes can be "FF" and "F0", or "0F" and "00" - some people with 
+the same model of plugs get different results, so worth a try if things aren't working.
+
+Once you're setup, run the app with `node pi433HomeAuto.js` and go to the URL you specified in
+settings.js, login, and you're ready to go.
+
+License
+=======
+MIT License - please see LICENSE for full details.
