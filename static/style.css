@@ -1,0 +1,122 @@
+body {
+	background-color: #f7f7f7;
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+a:hover, a:link, a:visited {
+	text-decoration: none;
+	color: #000;
+}
+
+input {
+	background-color: #f7f7f7;
+	border:0;
+
+	margin: 3px;
+	padding: 4px;
+}
+
+input[type=submit] {
+	padding: 8px;
+	float:right;
+}
+
+label {
+	display: inline-block;
+	margin: 3px;
+	padding: 4px;
+	width: 80px;
+}
+
+#login {
+	background-color: #fff;
+	border: 0;
+	padding: 20px;
+	margin: 3em auto;
+	width: 320px;
+	text-align:center;
+}
+
+#main br {
+	clear: both;
+}
+
+#login .error {
+	color: #ee0000;
+	font-weight: bold;
+}
+
+#main {
+	margin: 2em auto;
+	width: 750px;
+}
+
+#main #header {
+	margin: 6px;
+	padding: 6px;
+	font-size: 5em;
+	font-weight: bold;
+	letter-spacing: -10px;
+	font-family: Arial;
+	color: #333;
+	margin-bottom: -35px;
+	margin-left: -6px;
+}
+
+#main #settings {
+	background-color:#333;
+	color: #fff;
+	margin: 6px;
+	padding: 6px;
+	text-align:right;
+}
+
+#main #controls {
+	background-color:#fff;
+	margin: 6px;
+	padding: 12px;
+}
+
+#main #settings a {
+	color: #fff;
+}
+#main #adHocSwitch {
+	display: inline-block;
+	width: 230px;
+}
+
+#main #adHocSwitch input {
+	float: right;
+}
+
+#main .section {
+	float: left;
+	width: 49%;
+}
+
+#main .docs {
+	color: #ccc;
+	float: right;
+	font-size: 80%;
+	width: 49%;
+}
+
+#main .switchContainer {
+	margin-top: 12px;
+}
+
+#main .switchName {
+	display: inline-block;
+	width: 150px;
+}
+
+#main .switchOn {
+	color: #00a700;
+	margin-right: 10px;
+}
+
+#main .switchOff {
+	color: #e70000;
+}

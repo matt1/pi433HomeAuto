@@ -1,0 +1,8 @@
+<% include header %>
+		<div id="login">
+			<a href="/auth/google" border="0"><img src="static/login.png" /></a>
+			<% if (message.length > 0) { %><div class="error">
+				<p><%= message %></p>
+			</div><% } %>
+		</div>
+<% include footer %>

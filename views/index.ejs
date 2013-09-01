@@ -1,0 +1,44 @@
+<% include header %>
+		<!-- Logged in as <%= user.username %> -->
+		<div id="main">
+			<div id="header">
+				REMOTE CONTROL
+			</div>
+			<div id="settings">
+				<a href="/logout">logout</a>
+			</div>
+			<div id="controls">
+				<h2>Schedule</h2>
+				
+				<br/>
+				<h2>Switch Control</h2>
+				<div class="section">
+					<% for(var i=0; i<switches.length; i++) {%>
+					<div class="switchContainer">
+					<span class="switchName"><%= switches[i].name %></span> <a href="#" onclick="client.doSwitch(<%= switches[i].groupNumber %>, <%= switches[i].switchNumber %>,1);return false;" class="switchOn">On</a> <a href="#" onclick="client.doSwitch(<%= switches[i].groupNumber %>, <%= switches[i].switchNumber %>,0);return false;" class="switchOff">Off</a>
+					</div>
+					<% } %>
+				</div>
+				<div class="docs">
+					Switch individual switches on or off.
+				</div>
+				<br>
+				<h2>Ad hoc switch control</h2>
+				<div class="section">
+					<label>Group</label>
+					<input type="text" id="adHocSwitchGroup" name="group"/><br>
+					<label>Switch</label>
+					<input type="text" id="adHocSwitchSwitch" name="switch"/><br>
+					<div id="adHocSwitch">
+						<input id="adHocSwitchOn" type="submit" value="On"/><input id="adHocSwitchOff" type="submit" value="Off"/><br>
+					</div>
+				</div>
+				<div class="docs">
+					Manual control of any switch.  Numbers range form 1 to 4 for both group and switch.
+				</div>
+				<br>
+			</div>
+		
+		</div>
+		<script src="static/client.js"></script>
+<% include footer %>
