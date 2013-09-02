@@ -1,8 +1,6 @@
-function log(message) {
-	console.log('pi433HomeAuto-' + (new Date()).toISOString() + ': ' + message);
-}
-log('Started up.');
-
+/**
+ * Main nodeJS requirements
+ */
 var settings = require('./settings.js'),	// Change this to setup app
   flash = require('connect-flash'),
   express = require('express'),
@@ -10,11 +8,55 @@ var settings = require('./settings.js'),	// Change this to setup app
   util = require('util'),
   GoogleStrategy = require('passport-google').Strategy,
   childProcess = require('child_process');
-  
-var child = childProcess.fork(__dirname + '/switches.js');
-child.on('message', function(message) {
-	console.log('     App: Message from switches:' + message.body);
-});
+
+/**
+ * Main automation handler 'class' for main automation bits and pieces and not the express/node
+ * stuff.
+ */
+var pi433HomeAuto = function() {
+	this.switches;
+};
+
+/**
+ * Log a message
+ * 
+ * @param message
+ */
+pi433HomeAuto.prototype.log = function(message) {
+	console.log('pi433HomeAuto-' + (new Date()).toISOString() + ': ' + message);	
+};
+
+/**
+ * Start the child process for handling switching.
+ */
+pi433HomeAuto.prototype.startSwitches = function() {
+	this.switches = childProcess.fork(__dirname + '/switches.js');
+	this.switches.on('message', function(message) {
+		this.log('From switches: ' + message.body);
+	});
+};
+
+/**
+ * Set a switch state
+ * 
+ * @param user
+ * @param groupId
+ * @param switchId
+ * @param state
+ */
+pi433HomeAuto.prototype.setSwitch = function(user, groupId, switchId, state) {
+	console.dir(this);
+	this.switches.send({
+		body: user + ' sets ' + groupId + ',' + switchId + ' to state ' + state, 
+		g:groupId, 
+		s:switchId, 
+		st:state,
+		user:user
+	});
+};
+
+var homeAuto = new pi433HomeAuto();
+homeAuto.log('Started up.');
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -37,7 +79,7 @@ passport.use(new GoogleStrategy({
 	  
 	  if (found) {
 		  profile.identifier = identifier;
-		  log("Login for user " + profile.emails[0].value);
+		  homeAuto.log("Login for user " + profile.emails[0].value);
 		  return done(null, profile);
 	  } else {
 		return done(null,false,{ message: 'Not authorised' });
@@ -88,27 +130,25 @@ app.post('/switch', ensureAuthenticated,
 	
 	// paranoid final user check
 	if (settings.users.indexOf(req.user.emails[0].value) > -1) {
-		child.send({
-			body: user + ' sets ' + group + ',' + swtch + ' to state ' + state, 
-			g:group, 
-			s:swtch, 
-			st:state,
-			user:user
-		});
+		homeAuto.setSwitch(user, group, swtch, state);
 	}
   }
 );
 
 app.get('/logout', function(req, res){
-  log("Logout for user " + req.user.emails[0].value);
+  var user = "unknown";
+  if (req.user && req.user.emails && req.users.emails.length == 1) {
+	  user = req.user.emails[0].value;
+  }
+  homeAuto.log("Logout for user " + user);
   req.logout();
   res.redirect('/');
 });
 
-log('Starting up server listening on port ' + settings.port);
+homeAuto.log('Starting up server listening on port ' + settings.port);
 app.listen(settings.port);
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
+  res.redirect('/login');
 }

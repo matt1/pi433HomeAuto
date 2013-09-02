@@ -3,13 +3,13 @@
 */
 
 /** Hostname for root of application - no trailing slash!.  Used by Google authentication */
-exports.host = 'http://raspberrypi';
+exports.host = 'http://localhost';
 
 /** Port number used by app.  Used to listen on correct port etc */
 exports.port = 8080;
 	
 /** Users allowed access to the app */
-exports.users =  ['your.account@gmail.com'];
+exports.users =  ['matt.dibb@gmail.com'];
 
 /** Your switches! */	
 exports.switches = [

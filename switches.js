@@ -1,5 +1,8 @@
 var childProcess = require('child_process'); 
 
+/**
+ * Switches 'class'
+ */
 var Switches = function() {
 	
 	this.masks = {
@@ -10,12 +13,11 @@ var Switches = function() {
 		padding: 'FF',
 		on: '0FS',		// If these don't work, try FFS (on) and F0S
 		off: '00S'
-	}
+	};
 	
 	// Put into a nice array
 	this.maskIndexes = [{},this.masks.one, this.masks.two, this.masks.three, this.masks.four];
 	
-
 };
 
 /**
@@ -55,7 +57,7 @@ Switches.prototype.log = function(message) {
 };
 
 /**
- * Message recieved from parent.
+ * Message received from parent.
  */
 Switches.prototype.onMessage = function(message) {
 	
