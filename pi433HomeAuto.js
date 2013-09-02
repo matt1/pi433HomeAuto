@@ -13,7 +13,7 @@ var settings = require('./settings.js'),	// Change this to setup app
  * Main automation handler 'class' for main automation bits and pieces and not the express/node
  * stuff.
  */
-var pi433HomeAuto = function() {
+pi433HomeAuto = function() {
 	this.switches;
 };
 
@@ -30,9 +30,10 @@ pi433HomeAuto.prototype.log = function(message) {
  * Start the child process for handling switching.
  */
 pi433HomeAuto.prototype.startSwitches = function() {
+	var self = this;
 	this.switches = childProcess.fork(__dirname + '/switches.js');
 	this.switches.on('message', function(message) {
-		this.log('From switches: ' + message.body);
+		self.log('From switches: ' + message.body);
 	});
 };
 
@@ -45,7 +46,6 @@ pi433HomeAuto.prototype.startSwitches = function() {
  * @param state
  */
 pi433HomeAuto.prototype.setSwitch = function(user, groupId, switchId, state) {
-	console.dir(this);
 	this.switches.send({
 		body: user + ' sets ' + groupId + ',' + switchId + ' to state ' + state, 
 		g:groupId, 
@@ -55,7 +55,9 @@ pi433HomeAuto.prototype.setSwitch = function(user, groupId, switchId, state) {
 	});
 };
 
+// Initialise a new instance of pi433HomeAuto and child switch controller
 var homeAuto = new pi433HomeAuto();
+homeAuto.startSwitches();
 homeAuto.log('Started up.');
 
 passport.serializeUser(function(user, done) {
