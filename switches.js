@@ -21,6 +21,19 @@ var Switches = function() {
 };
 
 /**
+ * Request to set a switch state
+ */
+Switches.prototype.switchState = function(group, id, state) {
+	
+	var onoff = this.masks.off;
+	if (state == 1) {
+		onoff = this.masks.on;
+	}
+	var state = this.maskIndexes[group] + this.maskIndexes[id] + this.masks.padding + onoff;
+	this.execSwitch(state);
+};
+
+/**
  * Request to turn a switch on
  */
 Switches.prototype.switchOn = function(group, id) {

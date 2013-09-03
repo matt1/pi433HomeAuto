@@ -2,6 +2,7 @@
  * Main nodeJS requirements
  */
 var settings = require('./settings.js'),	// Change this to setup app
+  cronSchedule = require('./cron.js'),
   flash = require('connect-flash'),
   express = require('express'),
   passport = require('passport'),
@@ -15,6 +16,7 @@ var settings = require('./settings.js'),	// Change this to setup app
  */
 pi433HomeAuto = function() {
 	this.switches;
+	this.cron;
 };
 
 /**
@@ -38,6 +40,17 @@ pi433HomeAuto.prototype.startSwitches = function() {
 };
 
 /**
+ * Start up the crom job scheduler and pass it a reference to the switches child object
+ * @param switches
+ */
+pi433HomeAuto.prototype.startCron = function() {
+	if (!this.switches) {
+		this.startSwitches();
+	}
+	this.cron = new CronSchedule(this.switches);
+};
+
+/**
  * Set a switch state
  * 
  * @param user
@@ -58,6 +71,7 @@ pi433HomeAuto.prototype.setSwitch = function(user, groupId, switchId, state) {
 // Initialise a new instance of pi433HomeAuto and child switch controller
 var homeAuto = new pi433HomeAuto();
 homeAuto.startSwitches();
+homeAuto.startCron();
 homeAuto.log('Started up.');
 
 passport.serializeUser(function(user, done) {
