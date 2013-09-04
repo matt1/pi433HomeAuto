@@ -28,6 +28,9 @@ exports.switches = [
 /** The schedule for turning switches on and off. Order is not important as they will be loaded
  * at start-up and then processed appropriately.  cronmaker.com can help with the cron codes.
  * 
+ * groupNumber 1-4
+ * switchNumber 1-4, also can use 0 for all switches in the group.
+ * 
  * Example to turn on two lights (4,1 and 4,2) every dat at 6:15pm:
  * 
  *  {

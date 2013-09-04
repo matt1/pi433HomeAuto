@@ -24,7 +24,7 @@ var Switches = function() {
  * Request to set a switch state
  */
 Switches.prototype.switchState = function(group, id, state) {
-	console.log("switchState:" + group +"," + id +","+state);
+	var self = this;
 	var onoff = this.masks.off;
 	if (state == 1) {
 		onoff = this.masks.on;
@@ -33,19 +33,16 @@ Switches.prototype.switchState = function(group, id, state) {
 	var states = [];
 	if (id < 1) {
 		// do all switches
-		for(var i=1;i<4;i++) {
+		for(var i=1;i<5;i++) {
 			states.push(this.maskIndexes[group] + this.maskIndexes[i] + this.masks.padding + onoff);
 		}
 	} else {
 		states.push(this.maskIndexes[group] + this.maskIndexes[id] + this.masks.padding + onoff);
 		
 	}
-	console.log("looping on states");
 	states.forEach(function(s){
-		console.log("Activating state: " + s);
-		this.execSwitch(s);
+		self.execSwitch(s);
 	});
-	
 	
 };
 
@@ -53,7 +50,6 @@ Switches.prototype.switchState = function(group, id, state) {
  * Request to turn a switch on
  */
 Switches.prototype.switchOn = function(group, id) {
-	console.log("switchOn: " + group + "," + id);
 	this.switchState(group, id, 1);
 };
 
@@ -88,17 +84,13 @@ Switches.prototype.log = function(message) {
  * Message received from parent.
  */
 Switches.prototype.onMessage = function(message) {
-	
-	this.log(message.body);
-	console.dir(message);
-	if (message.s && message.g && message.st) {
+	if (message.g && message.st && (message.s >= 0 && message.s <= 4)) {
 		if (message.st == 1) {
 			this.switchOn(message.g, message.s);
 		} else {
 			this.switchOff(message.g, message.s);
 		}
 	}
-	
 };
 
 var s = new Switches();
