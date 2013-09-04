@@ -24,29 +24,44 @@ var Switches = function() {
  * Request to set a switch state
  */
 Switches.prototype.switchState = function(group, id, state) {
-	
+	console.log("switchState:" + group +"," + id +","+state);
 	var onoff = this.masks.off;
 	if (state == 1) {
 		onoff = this.masks.on;
 	}
-	var state = this.maskIndexes[group] + this.maskIndexes[id] + this.masks.padding + onoff;
-	this.execSwitch(state);
+	
+	var states = [];
+	if (id < 1) {
+		// do all switches
+		for(var i=1;i<4;i++) {
+			states.push(this.maskIndexes[group] + this.maskIndexes[i] + this.masks.padding + onoff);
+		}
+	} else {
+		states.push(this.maskIndexes[group] + this.maskIndexes[id] + this.masks.padding + onoff);
+		
+	}
+	console.log("looping on states");
+	states.forEach(function(s){
+		console.log("Activating state: " + s);
+		this.execSwitch(s);
+	});
+	
+	
 };
 
 /**
  * Request to turn a switch on
  */
 Switches.prototype.switchOn = function(group, id) {
-	var state = this.maskIndexes[group] + this.maskIndexes[id] + this.masks.padding + this.masks.on;
-	this.execSwitch(state);
+	console.log("switchOn: " + group + "," + id);
+	this.switchState(group, id, 1);
 };
 
 /**
  * Request to turn a switch off
  */
 Switches.prototype.switchOff = function(group, id) {
-	var state = this.maskIndexes[group] + this.maskIndexes[id] + this.masks.padding + this.masks.off;
-	this.execSwitch(state);
+	this.switchState(group, id, 0);
 };
 
 /**
@@ -75,6 +90,7 @@ Switches.prototype.log = function(message) {
 Switches.prototype.onMessage = function(message) {
 	
 	this.log(message.body);
+	console.dir(message);
 	if (message.s && message.g && message.st) {
 		if (message.st == 1) {
 			this.switchOn(message.g, message.s);

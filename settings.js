@@ -48,5 +48,16 @@ exports.switches = [
  * 
  */
 exports.schedule = [
+  {
+	  name: 'Daily switch on (18:30)',
+	  cron: '0 30 18 * * * ',
+	  switches: [
+	    {
+	      groupNumber:4,
+	      switchNumber:0,
+	      state:1
+	    }
+	  ]
+  }
   
 ];
