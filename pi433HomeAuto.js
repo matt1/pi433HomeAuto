@@ -83,8 +83,8 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new GoogleStrategy({
-    returnURL: settings.host + ':' + settings.port + '/' + 'auth/google/return',
-    realm: settings.host + ':' + settings.port
+    returnURL: settings.host + ':' + settings.authPort + '/' + 'auth/google/return',
+    realm: settings.host + ':' + settings.authPort
   },
   function(identifier, profile, done) {
     // asynchronous verification, for effect...
@@ -153,7 +153,7 @@ app.post('/switch', ensureAuthenticated,
 
 app.get('/logout', function(req, res){
   var user = "unknown";
-  if (req.user && req.user.emails && req.users.emails.length == 1) {
+  if (req.user && req.user.emails && req.user.emails.length == 1) {
 	  user = req.user.emails[0].value;
   }
   homeAuto.log("Logout for user " + user);

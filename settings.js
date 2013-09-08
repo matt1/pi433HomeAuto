@@ -2,11 +2,24 @@
 *	Settings for home automation
 */
 
-/** Hostname for root of application - no trailing slash!.  Used by Google authentication */
-exports.host = 'http://localhost';
+/**
+ * Command to use for sending switch controls.  Update to reflect your path
+ */
+exports.rcswitch = 'sudo /home/pi/projects/rcswitch-pi/sendTriState';
+
+/** Hostname for root of application - no trailing slash!.  Used by Google authentication so make
+ * sure that it will be reachable from all users (i.e. localhost probably wont work for other 
+ * users who are not running nodejs locally!). */
+exports.host = 'https://mattd.no-ip.biz';
 
 /** Port number used by app.  Used to listen on correct port etc */
 exports.port = 8080;
+
+/** Port number to be used during Google auth - if you are exposing node directly to the internet
+ * use the same port number as above (e.g. 8080).  If you are running behind a reverse proxy then
+ * use the port configured there.  E.g. if running a HTTPS reverse proxy, you'd use 443.
+ */
+exports.authPort = 443;
 	
 /** Users allowed access to the app */
 exports.users =  ['matt.dibb@gmail.com'];
