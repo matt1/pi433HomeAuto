@@ -3,6 +3,7 @@
  */
 var settings = require('./settings.js'),	// Change this to setup app
   cronSchedule = require('./cron.js'),
+  utils = require('./utils.js'),
   flash = require('connect-flash'),
   express = require('express'),
   passport = require('passport'),
@@ -25,7 +26,7 @@ pi433HomeAuto = function() {
  * @param message
  */
 pi433HomeAuto.prototype.log = function(message) {
-	console.log('pi433HomeAuto-' + (new Date()).toISOString() + ': ' + message);	
+	console.log('pi433HomeAuto-' + utils.toLogDateFormat(new Date()) + ': ' + message);	
 };
 
 /**
