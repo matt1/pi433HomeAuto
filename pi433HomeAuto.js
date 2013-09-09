@@ -147,7 +147,9 @@ app.post('/switch', ensureAuthenticated,
 	// paranoid final user check
 	if (settings.users.indexOf(req.user.emails[0].value) > -1) {
 		homeAuto.setSwitch(user, group, swtch, state);
-	}
+	} 
+	res.end("Ok");
+	
   }
 );
 
