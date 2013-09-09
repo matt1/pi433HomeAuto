@@ -73,6 +73,10 @@ label {
 	text-align:right;
 }
 
+#main #settings p {
+	display:none;
+}
+
 #main #controls {
 	background-color:#fff;
 	margin: 6px;
@@ -119,4 +123,52 @@ label {
 
 #main .switchOff {
 	color: #e70000;
+}
+
+/** Mobile rules */
+
+@media screen and (max-width: 1000px) { 
+	
+	body {
+		font-size: 200%;
+	}
+	
+	#main .section {
+		width: 99%;
+	}
+	
+	#main .switchName {
+		width: 320px;
+	}
+	
+	#main .docs {
+		display:none;
+	}	
+	
+	#main #header {
+		display:none;
+	}
+	
+	#main #settings p {
+		display:inline-block;
+		float:left;
+		margin:0;
+	}
+	
+	#main .switchContainer {
+		margin-top: 25px;
+	}
+	
+	#main .switchOn {
+		font-size: 150%;
+		margin-right: 50px;
+	}
+	
+	#main .switchOff {
+		font-size: 150%;
+	}
+	
+	
+	
+
 }
