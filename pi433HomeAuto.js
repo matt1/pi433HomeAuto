@@ -40,7 +40,7 @@ pi433HomeAuto.prototype.startSwitches = function() {
 };
 
 /**
- * Start up the crom job scheduler and pass it a reference to the switches child object
+ * Start up the cron job scheduler and pass it a reference to the switches child object
  * @param switches
  */
 pi433HomeAuto.prototype.startCron = function() {

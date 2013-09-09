@@ -42,8 +42,13 @@ Switches.prototype.switchState = function(group, id, state, user) {
 		
 	}
 	this.log(user + ' sets ' + group + ',' + id + ' to state ' + state);
+	var cnt = 0;
 	states.forEach(function(s){
-		self.execSwitch(s);
+		// Delay group execution to prevent simultaneous transmission
+		setTimeout(function(){
+			self.execSwitch(s);
+		}, 1000 * cnt);
+		cnt++;
 	});
 	
 };
