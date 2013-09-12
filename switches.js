@@ -91,7 +91,7 @@ Switches.prototype.log = function(message) {
  * Message received from parent.
  */
 Switches.prototype.onMessage = function(message) {
-	if (message.g && message.st && (message.s >= 0 && message.s <= 4)) {
+	if (message.g && (message.s >= 0 && message.s <= 4)) {
 		if (message.st == 1) {
 			this.switchOn(message.g, message.s, message.user);
 		} else {
