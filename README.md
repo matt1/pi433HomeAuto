@@ -100,7 +100,7 @@ Also, in switches.js you might need to fiddle with the codes sent to the switche
 for some switches the "On" and "Off" codes can be "FF" and "F0", or "0F" and "00" - some people with 
 the same model of plugs get different results, so worth a try if things aren't working.
 
-Once you're setup, run the app with `node pi433HomeAuto.js` and go to the URL you specified in
+Once you're setup, run the app with `node app.js` and go to the URL you specified in
 settings.js, login, and you're ready to go.
 
 License

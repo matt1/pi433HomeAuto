@@ -46,43 +46,22 @@ exports.switches = [
 /** The schedule for turning switches on and off. Order is not important as they will be loaded
  * at start-up and then processed appropriately.  cronmaker.com can help with the cron codes.
  */
+var d = new Date();
 exports.schedule = [
   {
 	  name: 'Daily switch on',
-	  cron: '0 30 19 * * * ',
+	  cron: '0 ' + (Number(d.getMinutes()) + 1) + ' ' + d.getHours() + ' * * * ',
 	  switches: [
 	    {
 	      groupNumber:4,
-	      switchNumber:0,
+	      switchNumber:1,
 	      state:1
 	    }
 	  ]
   },
   {
 	  name: 'Back room off',
-	  cron: '0 0 22 * * * ',
-	  switches: [
-	    {
-	      groupNumber:4,
-	      switchNumber:2,
-	      state:0
-	    }
-	  ]
-  },
-  {
-	  name: 'Living room off',
-	  cron: '0 30 22 * * * ',
-	  switches: [
-	    {
-	      groupNumber:4,
-	      switchNumber:2,
-	      state:0
-	    }
-	  ]
-  },
-  {
-	  name: 'Hall way off',
-	  cron: '0 45 22 * * * ',
+	  cron: '2 ' + (Number(d.getMinutes()) + 1) + ' ' + d.getHours() + ' * * * ',
 	  switches: [
 	    {
 	      groupNumber:4,
@@ -90,6 +69,5 @@ exports.schedule = [
 	      state:0
 	    }
 	  ]
-  }
-  
+  } 
 ];
