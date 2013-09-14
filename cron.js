@@ -1,5 +1,6 @@
-var settings = require('./settings.js');
-var cronJob = require('cron').CronJob;
+var settings = require('./settings.js'),
+  cronJob = require('cron').CronJob,
+  utils = require('./utils.js');
 
 /**
  * Create a new schedule manager that loads all of the jobs
@@ -15,7 +16,7 @@ CronSchedule = function(swicthesProcess) {
 	// job for each schedule, which calls each switch in that schedule when it fires.
 	settings.schedule.forEach(function(job) {
 
-    	console.log("Setting cron job: " + job.name + " - " + job.cron );
+    	utils.log("Setting cron job: " + job.name + " - " + job.cron, 'Cron');
 		var newJob = new cronJob(job.cron, function(){
 		    job.switches.forEach(function(switchEntry) {
 		    	self.switches.send({

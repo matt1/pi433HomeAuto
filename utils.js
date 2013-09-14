@@ -23,4 +23,13 @@ exports.toLogDateFormat = function(date) {
 			date.getMilliseconds();
 	
 	return formated;
-} 
+};
+
+/**
+ * Logs a message in the standard format.  If caller is not provided then a default will be used.
+ * 
+ */
+exports.log = function(message, caller) {
+	var callerName = caller || "UknownModule";
+	console.log(callerName +' ' + this.toLogDateFormat(new Date()) + ': ' + message);		
+};

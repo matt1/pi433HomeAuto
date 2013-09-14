@@ -1,5 +1,6 @@
 var childProcess = require('child_process'),
-	settings = require('./settings.js');
+  utils = require('./utils.js'),
+  settings = require('./settings.js');
 
 /**
  * Switches 'class'
@@ -84,7 +85,7 @@ Switches.prototype.execSwitch = function(state) {
  * Log out to the console
  */
 Switches.prototype.log = function(message) {
-	console.log('Switches-' + (new Date()).toISOString() + ': ' + message);
+	utils.log(message, 'Switches');
 };
 
 /**

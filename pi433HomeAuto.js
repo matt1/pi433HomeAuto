@@ -7,7 +7,7 @@ var settings = require('./settings.js'),
  * Main automation handler 'class' for main automation bits and pieces and not the express/node
  * stuff.
  */
-pi433HomeAuto = function() {
+pi433HA = function() {
 	this.switches;
 	this.cron;
 	
@@ -22,14 +22,14 @@ pi433HomeAuto = function() {
  * 
  * @param message
  */
-pi433HomeAuto.prototype.log = function(message) {
-	console.log('pi433HomeAuto-' + utils.toLogDateFormat(new Date()) + ': ' + message);	
+pi433HA.prototype.log = function(message) {
+	utils.log(message, 'pi433HA');
 };
 
 /**
  * Start the child process for handling switching.
  */
-pi433HomeAuto.prototype.startSwitches = function() {
+pi433HA.prototype.startSwitches = function() {
 	var self = this;
 	this.switches = childProcess.fork(__dirname + '/switches.js');
 	this.switches.on('message', function(message) {
@@ -41,7 +41,7 @@ pi433HomeAuto.prototype.startSwitches = function() {
  * Start up the cron job scheduler and pass it a reference to the switches child object
  * @param switches
  */
-pi433HomeAuto.prototype.startCron = function() {
+pi433HA.prototype.startCron = function() {
 	this.cron = new CronSchedule(this.switches);
 };
 
@@ -53,7 +53,7 @@ pi433HomeAuto.prototype.startCron = function() {
  * @param switchId
  * @param state
  */
-pi433HomeAuto.prototype.setSwitch = function(user, groupId, switchId, state) {
+pi433HA.prototype.setSwitch = function(user, groupId, switchId, state) {
 	this.switches.send({
 		body: user + ' sets ' + groupId + ',' + switchId + ' to state ' + state, 
 		g:groupId, 
