@@ -16,7 +16,8 @@ CronSchedule = function(swicthesProcess) {
 	// job for each schedule, which calls each switch in that schedule when it fires.
 	settings.schedule.forEach(function(job) {
 
-    	utils.log("Setting cron job: " + job.name + " - " + job.cron, 'Cron');
+    	utils.log('Setting cron job: ' + job.name + ' - ' + job.cron, 'Cron');
+    	try {
 		var newJob = new cronJob(job.cron, function(){
 		    job.switches.forEach(function(switchEntry) {
 		    	self.switches.send({
@@ -30,5 +31,8 @@ CronSchedule = function(swicthesProcess) {
 		    });
 		}, null, true);
 		self.jobs.push(newJob);
+    	} catch (e) {
+    		utils.log('Unexpected error setting cron job: ' + e.message);
+    	}
 	});
 };
