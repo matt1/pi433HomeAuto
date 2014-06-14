@@ -13,11 +13,15 @@ var settings = require('./settings.js'),	// Change this to setup app
   express = require('express'),
   passport = require('passport'),
   util = require('util'),
-  GoogleStrategy = require('passport-google').Strategy;
+  GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 
 // Initialise a new instance of pi433HA
 var homeAuto = new pi433HA();
+
+// Client ID & Secret
+var GOOGLE_CLIENT_ID = "";
+var GOOGLE_CLIENT_SECRET = "";
 
 /**
  * Passport config
@@ -39,23 +43,23 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new GoogleStrategy({
-    returnURL: settings.host + ':' + settings.authPort + '/' + 'auth/google/return',
-    realm: settings.host + ':' + settings.authPort
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: settings.host + ":" + settings.authPort + "/auth/google/callback"
   },
-  function(identifier, profile, done) {
-    process.nextTick(function () {
+  function(token, tokenSecret, profile, done) {
 	  var found = false;
 	  found = (settings.users.indexOf(profile.emails[0].value) > -1);
 	  if (found) {
-		  profile.identifier = identifier;
+		  //profile.identifier = identifier;
 		  utils.log("Login for user " + profile.emails[0].value, 'Passport');
 		  return done(null, profile);
 	  } else {
 		return done(null,false,{ message: 'Not authorised' });
 	  }
-    });
   }
 ));
+
 
 /**
  * Express config & handlers
@@ -81,9 +85,11 @@ app.get('/', ensureAuthenticated, function(req, res) {
   res.render('index', { user: req.user, switches: settings.switches });
 });
 
-app.get('/auth/google', passport.authenticate('google'));
+app.get('/auth/google', passport.authenticate('google', 
+		{ scope: ['https://www.googleapis.com/auth/userinfo.profile',
+                  'https://www.googleapis.com/auth/userinfo.email'] }));
 
-app.get('/auth/google/return', 
+app.get('/auth/google/callback', 
 	passport.authenticate('google', { 
 		successRedirect: '/', 
 		failureRedirect: '/login', 

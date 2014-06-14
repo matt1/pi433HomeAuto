@@ -88,7 +88,7 @@ require an architecture which supports blx" then I edited the src/node-v*/deps/v
 
 Once you've got node running you just need to finally install the following node modules: 
  
-`npm install express passport ejs connect-flash passport-google`
+`npm install express passport ejs connect-flash passport-google-oauth`
 
 Set up
 ======
